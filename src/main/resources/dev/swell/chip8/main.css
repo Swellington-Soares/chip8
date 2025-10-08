@@ -1,0 +1,4 @@
+.pressed {
+    -fx-background-color: #192b3a;
+    -fx-text-fill: white;
+}
