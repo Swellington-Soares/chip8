@@ -32,14 +32,14 @@ public class Chip8 {
 
     private AnimationTimer animTimer;
 
-    private byte[] memory = new byte[MEMORY_SIZE];
-    private byte[] V = new byte[16];
-    private int I = 0;
-    private int pc = PROGRAM_START;
-    private int sp = 0;
+    private byte[] memory = new byte[MEMORY_SIZE]; //memória do chip, geralmente 4kb
+    private byte[] V = new byte[16]; //registradores
+    private int I = 0; //endereço de índice
+    private int pc = PROGRAM_START; //contador do programa
+    private int sp = 0;//ponteiro da pilha
     private int delayTimer = 0;
     private int soundTimer = 0;
-    private int[] stack = new int[16];
+    private int[] stack = new int[16];//pilha
     private boolean[][] gfx = new boolean[DISPLAY_WIDTH][DISPLAY_HEIGHT];
     private boolean[] keys = new boolean[16];
     private boolean drawFlag = false;
@@ -222,12 +222,11 @@ public class Chip8 {
             case 0:
                 if (opcode.getOpcode() == 0x00e0) {
                     clearDisplay();
-                    opcode.debug();
                 } else if (opcode.getOpcode() == 0x00ee) {
                     sp--;
                     pc = stack[sp];
-                    opcode.debug();
                 }
+                opcode.debug();
                 break;
             case 0x1000:
                 pc = opcode.getNnn();
@@ -263,35 +262,34 @@ public class Chip8 {
                 switch (opcode.getN()) {
                     case 0:
                         V[opcode.getX()] = V[opcode.getY()];
-                        opcode.debug();
                         break;
                     case 1:
                         V[opcode.getX()] = (byte) ((V[opcode.getX()] | V[opcode.getY()]) & 0xff);
-                        opcode.debug();
+
                         break;
                     case 2:
                         V[opcode.getX()] = (byte) ((V[opcode.getX()] & V[opcode.getY()]) & 0xFF);
-                        opcode.debug();
+
                         break;
                     case 3:
                         V[opcode.getX()] = (byte) ((V[opcode.getX()] ^ V[opcode.getY()]) & 0xFF);
-                        opcode.debug();
+
                         break;
                     case 4:
                         int sum = (V[opcode.getX()] & 0xFF) + (V[opcode.getY()] & 0xFF);
                         V[0xF] = (byte) ((sum > 0xFF) ? 1 : 0);
                         V[opcode.getX()] = (byte) (sum & 0xFF);
-                        opcode.debug();
+
                         break;
                     case 5:
                         V[0xF] = (byte) ((V[opcode.getX()] & 0xFF) > (V[opcode.getY()] & 0xFF) ? 1 : 0);
                         V[opcode.getX()] = (byte) ((V[opcode.getX()] & 0xFF) - (V[opcode.getY()] & 0xFF));
-                        opcode.debug();
+
                         break;
                     case 6:
                         V[0xF] = (byte) ((V[opcode.getX()] & 0x01));
                         V[opcode.getX()] = (byte) ((V[opcode.getX()] & 0xFF) >> 1);
-                        opcode.debug();
+
                         break;
                     case 7:
                         V[0xF] = (byte) ((V[opcode.getY()] & 0xFF) > (V[opcode.getX()] & 0xFF) ? 1 : 0);
@@ -301,9 +299,10 @@ public class Chip8 {
                     case 0xe:
                         V[0xF] = (byte) ((V[opcode.getX()] & 0x80) >> 7);
                         V[opcode.getX()] = (byte) ((V[opcode.getX()] & 0xFF) << 1);
-                        opcode.debug();
+
                         break;
                 }
+                opcode.debug();
                 break;
             case 0x9000:
                 if (opcode.getN() == 0 && V[opcode.getX()] != V[opcode.getY()]) pc += 2;
