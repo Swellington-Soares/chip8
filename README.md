@@ -105,14 +105,11 @@ Essas ROMs ajudam a confirmar se a execução de cada opcode está correta e se 
 - Suporte a **Super-CHIP** (instruções e resolução ampliadas)  
 - Sistema de **debug visual** (memória, registradores, stack, tela)  
 - Opções de **configuração de quirks**  
-- Reimplementação gráfica com JavaFX ou Skia para renderização moderna  
-- Suporte a áudio real (emulação de beep)  
 
 
 ## 📜 Licença
 
 Este projeto é distribuído sob a licença **MIT**.  
-Consulte o arquivo [`LICENSE`](LICENSE) para mais informações.
 
 ---
 
